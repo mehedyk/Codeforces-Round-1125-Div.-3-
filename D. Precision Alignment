@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        long long k;
+        cin>>n>>k;
+        vector<long long> a(n),b(n),c(n);
+        long long mn=LLONG_MAX;
+        for(int i=0;i<n;i++){
+            cin>>a[i]>>b[i]>>c[i];
+            mn=min(mn,a[i]+b[i]+c[i]);
+        }
+        long long lo=mn,hi=mn+k;
+        while(lo<hi){
+            long long mid=lo+(hi-lo+1)/2;
+            long long total=0;
+            bool thik=true;
+            for(int i=0;i<n;i++){
+                long long s=a[i]+b[i]+c[i];
+                long long d=mid-s;
+                long long cost=0;
+                if(d>0){
+                    if(a[i]<=b[i]&&b[i]<=c[i]){
+                        if(a[i]==c[i])cost=4000000000000000000LL;
+                        else{
+                            long long e=min(b[i]-a[i],c[i]-b[i])+1;
+                            cost=d+2*e;
+                        }
+                    }
+                    else cost=d;
+                }
+                total+=cost;
+                if(total>k){
+                    thik=false;
+                    break;
+                }
+            }
+            if(thik) lo=mid;
+            else hi=mid-1;
+        }
+        cout<<lo<<endl;
+    }
+}
