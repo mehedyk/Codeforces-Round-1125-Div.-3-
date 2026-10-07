@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        vector<int> a(n+1);
+        for(int i=1;i<=n;i++)cin>>a[i];
+        int m=n-4;
+        vector<int> v(m+1);
+        for(int x=1;x<=m;x++)v[x]=a[x]+a[x+2]-a[x+4];
+        map<int,long long> cnt;
+        long long ans=0;
+        for(int y=1;y<=m;y++){
+            ans+=cnt[v[y]];
+            if(y-2>=1&&v[y-2]==v[y])ans--;
+            if(y-4>=1&&v[y-4]==v[y])ans--;
+            cnt[v[y]]++;
+        }
+        cout<<ans<<endl;
+    }
+}
